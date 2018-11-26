@@ -18,7 +18,7 @@ class MatchesSpider(scrapy.Spider):
             matchloader = ZaragozaMatchItemLoader(ZaragozaMatchItem(), match)
             matchloader.add_css('weekday', 'span.letra::text')
             matchloader.add_css('day', 'span.dia::text')
-            matchloader.add_css('time', 'span.hora::text')
+            matchloader.add_xpath('time', './/span[@class="fecha"]/span[@class="hora"]/text()')
             localteamloader = matchloader.nested_xpath('.//span[@class="equipo local"]')
             localteamloader.add_xpath('localteam', './/span[@class="team"]/text()')
             foreignteamloader = matchloader.nested_xpath('.//span[@class="equipo visitante"]')
@@ -35,13 +35,3 @@ class MatchesSpider(scrapy.Spider):
         fscoreprocessor = Join(' - ')
         fscore = fscoreprocessor(match.xpath('.//strong/text()').extract())
         return fscore
-
-    def get_match_time(self, match):
-        """
-        Extracts match time from match details.
-        :param match: Full match details.
-        :return: datetime.time object with hour and minutes.
-        """
-        hour, minutes = map(int, match.css('span.hora::text').extract_first().strip(' ·').split(':'))
-        matchtime = datetime.time(hour, minutes)
-        return matchtime
