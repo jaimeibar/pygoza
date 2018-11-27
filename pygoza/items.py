@@ -28,7 +28,7 @@ def format_match_day(day):
 def get_match_time(mtime):
     """
     Converts string time into datetime.time object
-    :param time: Match time details.
+    :param mtime: Match time details.
     :return: datetime.time object with hour and minutes.
     """
     if not mtime or mtime == ' ':
@@ -37,6 +37,7 @@ def get_match_time(mtime):
         hour, minutes = map(int, tme.strip(' ·').split(':'))
         matchtime = datetime.time(hour, minutes)
         return matchtime
+
 
 class ZaragozaMatchItem(scrapy.Item):
     weekday = scrapy.Field()
