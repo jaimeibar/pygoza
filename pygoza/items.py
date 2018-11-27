@@ -25,6 +25,7 @@ def format_match_day(day):
     matchday = datetime.date(year, month, day)
     return matchday
 
+
 def get_match_time(mtime):
     """
     Converts string time into datetime.time object
@@ -33,10 +34,10 @@ def get_match_time(mtime):
     """
     if not mtime or mtime == ' ':
         return 'N/A'
-    for tme in mtime:
-        hour, minutes = map(int, tme.strip(' ·').split(':'))
-        matchtime = datetime.time(hour, minutes)
-        return matchtime
+    mtime = mtime[0]
+    hour, minutes = map(int, mtime.strip(' ·').split(':'))
+    matchtime = datetime.time(hour, minutes)
+    return matchtime
 
 
 class ZaragozaMatchItem(scrapy.Item):
