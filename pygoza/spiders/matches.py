@@ -1,7 +1,6 @@
 import datetime
 
 import scrapy
-from scrapy.loader.processors import Join
 
 from pygoza.items import ZaragozaMatchItem, ZaragozaMatchItemLoader
 
@@ -25,13 +24,3 @@ class MatchesSpider(scrapy.Spider):
             foreignteamloader.add_xpath('foreignteam', './/span[@class="team"]/text()')
             matchloader.add_xpath('finalscore', './/strong/text()')
             yield matchloader.load_item()
-
-    def get_final_score(self, match):
-        """
-        Extracts final score from match details.
-        :param match: Full match details.
-        :return: String final score.
-        """
-        fscoreprocessor = Join(' - ')
-        fscore = fscoreprocessor(match.xpath('.//strong/text()').extract())
-        return fscore
