@@ -1,5 +1,3 @@
-import datetime
-
 import scrapy
 
 from pygoza.items import ZaragozaMatchItem, ZaragozaMatchItemLoader
