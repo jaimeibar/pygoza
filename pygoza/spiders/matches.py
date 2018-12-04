@@ -1,5 +1,7 @@
 import scrapy
 
+from icalendar import Calendar
+
 from pygoza.items import ZaragozaMatchItem, ZaragozaMatchItemLoader
 
 class MatchesSpider(scrapy.Spider):
@@ -22,3 +24,7 @@ class MatchesSpider(scrapy.Spider):
             foreignteamloader.add_xpath('foreignteam', './/span[@class="team"]/text()')
             matchloader.add_xpath('finalscore', './/strong/text()')
             yield matchloader.load_item()
+
+    def get_calendar(self):
+        zgzcalendar = Calendar()
+        return zgzcalendar
