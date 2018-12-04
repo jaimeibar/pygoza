@@ -12,6 +12,8 @@ import scrapy
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import Compose, MapCompose, Identity, Join
 
+from icalendar import Calendar
+
 logger = logging.getLogger(__name__)
 
 
