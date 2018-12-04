@@ -7,7 +7,7 @@
 
 import logging
 
-from icalendar import Calendar, Event
+from icalendar import Event
 
 
 """
@@ -25,18 +25,20 @@ logger = logging.getLogger(__name__)
 
 class PygozaPipeline(object):
 
-    def __init__(self):
-        self.zgzcalendar = self.open_calendar()
+    def __init__(self, zgzcalendar):
+        self.zgzcalendar = zgzcalendar
 
     def open_spider(self, spider):
-        self.file = open('zgzcalendar.ics', 'wb')
+        self.file = open('zgzcalendar.ics', 'w')
 
-    def close_spider(self, spider):
+    def close_spider(self):
         self.file.close()
 
-    def open_calendar(self):
-        cal = Calendar()
-        return cal
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            zgzcalendar=crawler.get_calendar()
+        )
 
     def process_item(self, item, spider):
         match = Event()
