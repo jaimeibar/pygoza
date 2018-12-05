@@ -11,7 +11,14 @@ class MatchesSpider(scrapy.Spider):
     start_urls = [
             'https://www.laliga.es/en/laliga-123/zaragoza/calendar'
         ]
-    zgzcalendar = Calendar()
+
+    def __init__(self, *args, **kwargs):
+        self._calendar = Calendar()
+        super(MatchesSpider, self).__init__(*args, **kwargs)
+
+    @property
+    def calendar(self):
+        return self._calendar
 
     def parse(self, response):
         matches = response.xpath('//div[starts-with(@class, "partido")]')
