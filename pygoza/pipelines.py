@@ -28,21 +28,21 @@ class PygozaPipeline(object):
     def __init__(self, zgzcalendar):
         self.zgzcalendar = zgzcalendar
 
-    def open_spider(self, spider):
-        self.file = open('zgzcalendar.ics', 'w')
-
-    def close_spider(self):
-        self.file.close()
-
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
-            zgzcalendar=crawler.get_calendar()
+            zgzcalendar=getattr(crawler.spider, "zgzcalendar")
         )
+
+    def open_spider(self, spider):
+        self.calendarfile = open('zgzcalendar.ics', 'wb')
+
+    def close_spider(self, spider):
+        self.calendarfile.close()
 
     def process_item(self, item, spider):
         match = Event()
         for k, v in item.items():
             match.add(k, v)
         self.zgzcalendar.add_component(match)
-        self.file.write(self.zgzcalendar.to_ical())
+        self.calendarfile.write(self.zgzcalendar.to_ical())
