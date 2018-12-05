@@ -33,3 +33,9 @@ class MatchesSpider(scrapy.Spider):
             foreignteamloader.add_xpath('foreignteam', './/span[@class="team"]/text()')
             matchloader.add_xpath('finalscore', './/strong/text()')
             yield matchloader.load_item()
+        self.write_calendar_to_file()
+
+    def write_calendar_to_file(self):
+        cfile = open('zgzcalendar.ics', 'wb')
+        cfile.write(self.calendar.to_ical())
+        cfile.close()
