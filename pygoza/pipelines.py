@@ -31,7 +31,7 @@ class PygozaPipeline(object):
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
-            zgzcalendar=getattr(crawler.spider, "zgzcalendar")
+            zgzcalendar=getattr(crawler.spider, 'calendar')
         )
 
     def open_spider(self, spider):
