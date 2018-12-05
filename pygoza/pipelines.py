@@ -34,15 +34,8 @@ class PygozaPipeline(object):
             zgzcalendar=getattr(crawler.spider, 'calendar')
         )
 
-    def open_spider(self, spider):
-        self.calendarfile = open('zgzcalendar.ics', 'wb')
-
-    def close_spider(self, spider):
-        self.calendarfile.close()
-
     def process_item(self, item, spider):
         match = Event()
         for k, v in item.items():
             match.add(k, v)
         self.zgzcalendar.add_component(match)
-        self.calendarfile.write(self.zgzcalendar.to_ical())
