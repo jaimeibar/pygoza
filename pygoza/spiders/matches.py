@@ -4,12 +4,14 @@ from icalendar import Calendar
 
 from pygoza.items import ZaragozaMatchItem, ZaragozaMatchItemLoader
 
+
 class MatchesSpider(scrapy.Spider):
 
     name = "matches"
     start_urls = [
             'https://www.laliga.es/en/laliga-123/zaragoza/calendar'
         ]
+    zgzcalendar = Calendar()
 
     def parse(self, response):
         matches = response.xpath('//div[starts-with(@class, "partido")]')
@@ -24,7 +26,3 @@ class MatchesSpider(scrapy.Spider):
             foreignteamloader.add_xpath('foreignteam', './/span[@class="team"]/text()')
             matchloader.add_xpath('finalscore', './/strong/text()')
             yield matchloader.load_item()
-
-    def get_calendar(self):
-        zgzcalendar = Calendar()
-        return zgzcalendar
