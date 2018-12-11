@@ -24,7 +24,6 @@ class MatchesSpider(scrapy.Spider):
         matches = response.xpath('//div[starts-with(@class, "partido")]')
         for match in matches:
             matchloader = ZaragozaMatchItemLoader(ZaragozaMatchItem(), match)
-            matchloader.add_css('weekday', 'span.letra::text')
             matchloader.add_css('day', 'span.dia::text')
             matchloader.add_xpath('time', './/span[@class="fecha"]/span[@class="hora"]/text()')
             localteamloader = matchloader.nested_xpath('.//span[@class="equipo local"]')
@@ -36,6 +35,8 @@ class MatchesSpider(scrapy.Spider):
         self.write_calendar_to_file()
 
     def write_calendar_to_file(self):
+        self.calendar.add('prodid', '-//My calendar//EN//')
+        self.calendar.add('version', '2.0')
         cfile = open('zgzcalendar.ics', 'wb')
         cfile.write(self.calendar.to_ical())
         cfile.close()
