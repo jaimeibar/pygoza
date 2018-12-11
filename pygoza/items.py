@@ -16,7 +16,7 @@ from scrapy.loader.processors import Compose, MapCompose, Identity, Join
 logger = logging.getLogger(__name__)
 
 
-def format_match_day(day):
+def get_match_day(day):
     """
     Converts string match day to datetime.date object
     :param day: Unformatted match day
@@ -34,7 +34,7 @@ def get_match_time(mtime):
     :return: datetime.time object with hour and minutes.
     """
     if not mtime or mtime == ' ':
-        return 'N/A'
+        return datetime.time(0, 0)
     mtime = mtime[0]
     hour, minutes = map(int, mtime.strip(' ·').split(':'))
     matchtime = datetime.time(hour, minutes)
@@ -42,7 +42,6 @@ def get_match_time(mtime):
 
 
 class ZaragozaMatchItem(scrapy.Item):
-    weekday = scrapy.Field()
     day = scrapy.Field()
     time = scrapy.Field()
     localteam = scrapy.Field()
@@ -52,8 +51,7 @@ class ZaragozaMatchItem(scrapy.Item):
 
 class ZaragozaMatchItemLoader(ItemLoader):
     default_item_class = ZaragozaMatchItem
-    weekday_in = Identity()
-    day_in = MapCompose(str.strip, format_match_day)
+    day_in = MapCompose(str.strip, get_match_day)
     time_in = Compose(get_match_time)
     localteam_in = Identity()
     foreignteam_in = Identity()
