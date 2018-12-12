@@ -10,8 +10,8 @@ import logging
 
 import scrapy
 from scrapy.loader import ItemLoader
-from scrapy.loader.processors import Compose, MapCompose, Identity, Join
-
+from scrapy.loader.processors import Compose, MapCompose, Identity, Join, \
+    TakeFirst
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +50,7 @@ def filter_match_result(result):
     :return: Match result of the form ['2', '1']
     """
     return None if not result.isdigit() else result.strip()
+
 
 class ZaragozaMatchItem(scrapy.Item):
     day = scrapy.Field()
