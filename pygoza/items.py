@@ -34,12 +34,22 @@ def get_match_time(mtime):
     :return: datetime.time object with hour and minutes.
     """
     if not mtime or mtime == ' ':
-        return datetime.time(0, 0)
+        return None
     mtime = mtime[0]
     hour, minutes = map(int, mtime.strip(' ·').split(':'))
     matchtime = datetime.time(hour, minutes)
     return matchtime
 
+
+def filter_match_result(result):
+    """
+    Filter match result in case of unexpected values like
+    ['R. Zaragoza', '2', '1'] due to an extra strong tag
+    in some matches.
+    :param result: Match result.
+    :return: Match result of the form ['2', '1']
+    """
+    return None if not result.isdigit() else result.strip()
 
 class ZaragozaMatchItem(scrapy.Item):
     day = scrapy.Field()
@@ -55,4 +65,4 @@ class ZaragozaMatchItemLoader(ItemLoader):
     time_in = Compose(get_match_time)
     localteam_in = Identity()
     foreignteam_in = Identity()
-    finalscore_in = Compose(MapCompose(lambda v: v.strip()), Join(' - '))
+    finalscore_in = Compose(MapCompose(filter_match_result, Join(' - ')))
