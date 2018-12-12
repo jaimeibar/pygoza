@@ -13,7 +13,6 @@ from scrapy.exceptions import DropItem
 from icalendar import Event
 
 
-
 """
 BEGIN:VCALENDAR
 VERSION:2.0
