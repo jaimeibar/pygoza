@@ -5,16 +5,23 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
+from datetime import datetime, time
 import logging
+import pytz
 
+from scrapy.exceptions import DropItem
 from icalendar import Event
+
 
 
 """
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:<ENTER INFORMATION HERE>
+PRODID:-//My calendar//EN//
 BEGIN:VEVENT
+SUMMARY:
+DTSTAMP:
+DESCRIPTION:
 END:VEVENT
 END:VCALENDAR
 """
@@ -35,7 +42,17 @@ class PygozaPipeline(object):
         )
 
     def process_item(self, item, spider):
-        match = Event()
-        for k, v in item.items():
-            match.add(k, v)
-        self.zgzcalendar.add_component(match)
+        if item.keys():
+            summary = '{0} - {1}'.format(item.get('localteam'), item.get('foreignteam'))
+            mday = item.get('day')[0]
+            mtime = item.get('time', 'N/A')[0]
+            if isinstance(mtime, time):
+                dtstamp = datetime.combine(mday, mtime, tzinfo=pytz.UTC)
+            finalscore = item.get('finalscore')
+            # match = Event()
+            # match.add('summary', summary)
+            # match.add('dtstamp', dtstamp)
+            # match.add('description', description)
+            # self.zgzcalendar.add_component(match)
+        else:
+            raise DropItem('No match event details')
