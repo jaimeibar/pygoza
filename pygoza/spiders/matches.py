@@ -23,7 +23,7 @@ class MatchesSpider(scrapy.Spider):
     def parse(self, response):
         matches = response.xpath('//div[starts-with(@class, "partido")]')
         for match in matches:
-            matchloader = ZaragozaMatchItemLoader(ZaragozaMatchItem(), response=match)
+            matchloader = ZaragozaMatchItemLoader(ZaragozaMatchItem(), selector=match)
             matchloader.add_css('day', 'span.dia::text')
             matchloader.add_xpath('time', './/span[@class="fecha"]/span[@class="hora"]/text()')
             localteamloader = matchloader.nested_xpath('.//span[@class="equipo local"]')
