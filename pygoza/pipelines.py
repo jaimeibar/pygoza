@@ -48,6 +48,8 @@ class PygozaPipeline(object):
             mtime = item.get('time', 'N/A')[0]
             if isinstance(mtime, time):
                 dtstamp = datetime.combine(mday, mtime, tzinfo=pytz.UTC)
+            else:
+                dtstamp = datetime(mday.year, mday.month, mday.day, tzinfo=pytz.UTC)
             description = item.get('finalscore')
             match = Event()
             match.add('summary', summary)
