@@ -48,11 +48,11 @@ class PygozaPipeline(object):
             mtime = item.get('time', 'N/A')[0]
             if isinstance(mtime, time):
                 dtstamp = datetime.combine(mday, mtime, tzinfo=pytz.UTC)
-            finalscore = item.get('finalscore')
-            # match = Event()
-            # match.add('summary', summary)
-            # match.add('dtstamp', dtstamp)
-            # match.add('description', description)
-            # self.zgzcalendar.add_component(match)
+            description = item.get('finalscore')
+            match = Event()
+            match.add('summary', summary)
+            match.add('dtstamp', dtstamp)
+            match.add('description', description)
+            self.zgzcalendar.add_component(match)
         else:
             raise DropItem('No match event details')
