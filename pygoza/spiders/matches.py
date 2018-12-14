@@ -1,8 +1,13 @@
+import logging
+
 import scrapy
 
 from icalendar import Calendar
 
 from pygoza.items import ZaragozaMatchItem, ZaragozaMatchItemLoader
+
+
+logger = logging.getLogger(__name__)
 
 
 class MatchesSpider(scrapy.Spider):
@@ -28,6 +33,10 @@ class MatchesSpider(scrapy.Spider):
             matchloader.add_xpath('time', './/span[@class="fecha"]/span[@class="hora"]/text()')
             localteamloader = matchloader.nested_xpath('.//span[@class="equipo local"]')
             localteamloader.add_xpath('localteam', './/span[@class="team"]/text()')
+            locteam = localteamloader.get_collected_values('localteam')
+            # Needed in case localteam is defined inside a <strong> tag
+            if not locteam:
+                localteamloader.replace_xpath('localteam', './/span[@class="team"]/strong/text()')
             foreignteamloader = matchloader.nested_xpath('.//span[@class="equipo visitante"]')
             foreignteamloader.add_xpath('foreignteam', './/span[@class="team"]/text()')
             matchloader.add_xpath('finalscore', './/strong/text()')
