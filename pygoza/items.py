@@ -10,8 +10,7 @@ import logging
 
 import scrapy
 from scrapy.loader import ItemLoader
-from scrapy.loader.processors import Compose, MapCompose, Identity, Join, \
-    TakeFirst
+from scrapy.loader.processors import Compose, MapCompose, Join, TakeFirst
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +63,6 @@ class ZaragozaMatchItemLoader(ItemLoader):
     default_item_class = ZaragozaMatchItem
     day_in = MapCompose(str.strip, get_match_day)
     time_in = Compose(get_match_time)
-    localteam_in = Identity()
-    foreignteam_in = Identity()
+    localteam_out = TakeFirst()
+    foreignteam_out = TakeFirst()
     finalscore_in = Compose(MapCompose(filter_match_result, Join(' - ')))
