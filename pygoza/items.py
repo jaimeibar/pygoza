@@ -44,7 +44,7 @@ def filter_match_result(result):
     """
     Filter match result in case of unexpected values like
     ['R. Zaragoza', '2', '1'] due to an extra strong tag
-    in some matches.
+    in some matches details.
     :param result: Match result.
     :return: Match result of the form ['2', '1']
     """
@@ -65,4 +65,4 @@ class ZaragozaMatchItemLoader(ItemLoader):
     time_in = Compose(get_match_time)
     localteam_out = TakeFirst()
     foreignteam_out = TakeFirst()
-    finalscore_in = Compose(MapCompose(filter_match_result, Join(' - ')))
+    finalscore_in = Compose(MapCompose(filter_match_result), Join(' - '))
