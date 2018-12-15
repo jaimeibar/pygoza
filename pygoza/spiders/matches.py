@@ -39,6 +39,10 @@ class MatchesSpider(scrapy.Spider):
                 localteamloader.replace_xpath('localteam', './/span[@class="team"]/strong/text()')
             foreignteamloader = matchloader.nested_xpath('.//span[@class="equipo visitante"]')
             foreignteamloader.add_xpath('foreignteam', './/span[@class="team"]/text()')
+            # Needed in case foreignteam is defined inside a <strong> tag
+            forteam = foreignteamloader.get_collected_values('foreignteam')
+            if not forteam:
+                foreignteamloader.replace_xpath('foreignteam', './/span[@class="team"]/strong/text()')
             matchloader.add_xpath('finalscore', './/strong/text()')
             yield matchloader.load_item()
         self.write_calendar_to_file()
