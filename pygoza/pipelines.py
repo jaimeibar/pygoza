@@ -8,6 +8,7 @@
 from datetime import datetime, time
 import logging
 import pytz
+import uuid
 
 from scrapy.exceptions import DropItem
 from icalendar import Event
@@ -52,6 +53,7 @@ class PygozaPipeline(object):
             description = item.get('finalscore')
             match = Event()
             match.add('summary', summary)
+            match.add('uid', uuid.uuid4())
             match.add('dtstart', dtstart)
             match.add('dtstamp', datetime.now(tz=pytz.UTC))
             match.add('description', description)
