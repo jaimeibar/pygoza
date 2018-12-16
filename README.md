@@ -1,8 +1,8 @@
 # pygoza
 
-Get information about all Real Zaragoza matches.
+Fetch information about all Real Zaragoza matches.
 
-Output: ics file ready to import to a Calendar app.
+Output: ics file ready to import into a Calendar app.
 
 ### Events description
 
@@ -10,4 +10,6 @@ Output: ics file ready to import to a Calendar app.
 | ----- | ------ |
 | SUMMARY | Localteam - Foreignteam |
 | DTSTART | Match date and time |
-| DESCRIPTION | Full match details. Match result |
+| DTSTAMP | Event timestamp |
+| UUID | Event uuid |
+| DESCRIPTION | Full match details. Match result. Not played yet in case the match is still pending |
