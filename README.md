@@ -9,5 +9,5 @@ Output: ics file ready to import to a Calendar app.
 | Event | Detail |
 | ----- | ------ |
 | SUMMARY | Localteam - Foreignteam |
-| DTSTAMP | Match date and time |
+| DTSTART | Match date and time |
 | DESCRIPTION | Full match details. Match result |
