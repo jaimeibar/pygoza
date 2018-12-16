@@ -53,6 +53,7 @@ class PygozaPipeline(object):
             match = Event()
             match.add('summary', summary)
             match.add('dtstart', dtstart)
+            match.add('dtstamp', datetime.now(tz=pytz.UTC))
             match.add('description', description)
             self.zgzcalendar.add_component(match)
         else:
