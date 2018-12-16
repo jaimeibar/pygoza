@@ -46,13 +46,13 @@ class PygozaPipeline(object):
             mday = item.get('day')[0]
             mtime = item.get('time', 'N/A')[0]
             if isinstance(mtime, time):
-                dtstamp = datetime.combine(mday, mtime, tzinfo=pytz.UTC)
+                dtstart = datetime.combine(mday, mtime, tzinfo=pytz.UTC)
             else:
-                dtstamp = datetime(mday.year, mday.month, mday.day, tzinfo=pytz.UTC)
+                dtstart = datetime(mday.year, mday.month, mday.day, tzinfo=pytz.UTC)
             description = item.get('finalscore')
             match = Event()
             match.add('summary', summary)
-            match.add('dtstamp', dtstamp)
+            match.add('dtstart', dtstart)
             match.add('description', description)
             self.zgzcalendar.add_component(match)
         else:
