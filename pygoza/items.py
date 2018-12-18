@@ -65,4 +65,5 @@ class ZaragozaMatchItemLoader(ItemLoader):
     time_in = Compose(get_match_time)
     localteam_out = TakeFirst()
     foreignteam_out = TakeFirst()
-    finalscore_in = Compose(MapCompose(filter_match_result), Join(' - '))
+    finalscore_in = MapCompose(filter_match_result)
+    finalscore_out = Join(' - ')
