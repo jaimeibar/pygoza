@@ -7,6 +7,7 @@
 
 import datetime
 import logging
+import pytz
 
 import scrapy
 from scrapy.loader import ItemLoader
@@ -36,7 +37,7 @@ def get_match_time(mtime):
         return None
     mtime = mtime[0]
     hour, minutes = map(int, mtime.strip(' ·').split(':'))
-    matchtime = datetime.time(hour, minutes)
+    matchtime = datetime.time(hour, minutes, tzinfo=pytz.UTC)
     return matchtime
 
 
