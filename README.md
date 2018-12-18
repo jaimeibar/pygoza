@@ -13,3 +13,8 @@ Output: ics file ready to import into a Calendar app.
 | DTSTAMP | Event timestamp |
 | UUID | Event uuid |
 | DESCRIPTION | Full match details. Match result. Not played yet in case the match is still pending |
+
+### TODO
+ * Event end details
+ * Extra info(TV channel)
+ * Timezone
