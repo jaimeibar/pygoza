@@ -33,8 +33,8 @@ class MatchesSpider(scrapy.Spider):
             matchloader.add_xpath('time', './/span[@class="fecha"]/span[@class="hora"]/text()')
             localteamloader = matchloader.nested_xpath('.//span[@class="equipo local"]')
             localteamloader.add_xpath('localteam', './/span[@class="team"]/text()')
-            locteam = localteamloader.get_collected_values('localteam')
             # Needed in case localteam is defined inside a <strong> tag
+            locteam = localteamloader.get_collected_values('localteam')
             if not locteam:
                 localteamloader.replace_xpath('localteam', './/span[@class="team"]/strong/text()')
             foreignteamloader = matchloader.nested_xpath('.//span[@class="equipo visitante"]')
