@@ -48,7 +48,7 @@ class MatchesSpider(scrapy.Spider):
         self.write_calendar_to_file()
 
     def write_calendar_to_file(self):
-        self.calendar.add('prodid', '-//My calendar//EN//')
+        self.calendar.add('prodid', '-//My ZGZ calendar//EN//')
         self.calendar.add('version', '2.0')
         self.calendar.add('calscale', 'gregorian')
         self.calendar.add('method', 'publish')
