@@ -58,6 +58,7 @@ class ZaragozaMatchItem(scrapy.Item):
     localteam = scrapy.Field()
     foreignteam = scrapy.Field()
     finalscore = scrapy.Field()
+    tv = scrapy.Field()
 
 
 class ZaragozaMatchItemLoader(ItemLoader):
@@ -68,3 +69,5 @@ class ZaragozaMatchItemLoader(ItemLoader):
     foreignteam_out = TakeFirst()
     finalscore_in = MapCompose(filter_match_result)
     finalscore_out = Join(' - ')
+    tv_in = Compose(lambda t: t[0].strip() if t else None)
+    tv_out = TakeFirst()
