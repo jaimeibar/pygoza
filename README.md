@@ -13,7 +13,7 @@ Output: ics file ready to import into a Calendar app.
 | DTEND | Match end date and time |
 | DTSTAMP | Event timestamp |
 | UUID | Event uuid |
-| DESCRIPTION | Full match details. Match result. Not played yet in case the match is still pending |
+| DESCRIPTION | Full match details. Match result. Not played yet in case the match is still pending. TV channel. |
 
 
 ### Full calendar ics file details
@@ -37,5 +37,4 @@ END:VCALENDAR
 
 
 ### TODO
- * Extra info(TV channel)
  * Timezone
