@@ -44,6 +44,7 @@ class MatchesSpider(scrapy.Spider):
             if not forteam:
                 foreignteamloader.replace_xpath('foreignteam', './/span[@class="team"]/strong/text()')
             matchloader.add_xpath('finalscore', './/strong/text()')
+            matchloader.add_css('tv', 'span.tv::text')
             yield matchloader.load_item()
         self.write_calendar_to_file()
 
