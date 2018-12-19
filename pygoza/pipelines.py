@@ -58,7 +58,9 @@ class PygozaPipeline(object):
             else:
                 dtstart = datetime(mday.year, mday.month, mday.day, tzinfo=pytz.UTC)
                 dtend = dtstart
-            description = 'Final score: {0}'.format(item.get('finalscore', 'Not played yet'))
+            finalscore = 'Final score: {0}'.format(item.get('finalscore', 'Not played yet'))
+            tv = 'TV: {0}'.format(item.get('tv', 'Not available yet'))
+            description = '{0}\n{1}'.format(finalscore, tv)
             match = Event()
             match.add('summary', summary)
             match.add('uid', uuid.uuid4())
