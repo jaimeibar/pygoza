@@ -37,6 +37,5 @@ END:VCALENDAR
 
 
 ### TODO
- * Event end details
  * Extra info(TV channel)
  * Timezone
