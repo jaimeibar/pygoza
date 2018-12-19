@@ -5,7 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 import logging
 import pytz
 import uuid
@@ -22,6 +22,7 @@ BEGIN:VEVENT
 SUMMARY:
 UUID:
 DTSTART:
+DTEND:
 DTSTAMP:
 DESCRIPTION:
 END:VEVENT
@@ -30,6 +31,9 @@ END:VCALENDAR
 
 
 logger = logging.getLogger(__name__)
+
+# Match time duration.
+MATCHTIME = timedelta(hours=2)
 
 
 class PygozaPipeline(object):
@@ -50,15 +54,18 @@ class PygozaPipeline(object):
             mtime = item.get('time', 'N/A')[0]
             if isinstance(mtime, time):
                 dtstart = datetime.combine(mday, mtime, tzinfo=pytz.UTC)
+                dtend = dtstart + MATCHTIME
             else:
                 dtstart = datetime(mday.year, mday.month, mday.day, tzinfo=pytz.UTC)
+                dtend = dtstart
             description = 'Final score: {0}'.format(item.get('finalscore', 'Not played yet'))
             match = Event()
             match.add('summary', summary)
             match.add('uid', uuid.uuid4())
             match.add('dtstart', dtstart)
+            match.add('dtend', dtend)
             match.add('dtstamp', datetime.now(tz=pytz.UTC))
             match.add('description', description)
             self.zgzcalendar.add_component(match)
         else:
-            raise DropItem('No match event details')
+            raise DropItem('No match event details found')
