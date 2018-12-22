@@ -32,5 +32,6 @@ setup(name='pygoza',
           'console_scripts': [
               'pygoza = pygoza.cli:main'
           ]
-
-      })
+      },
+      data_files=[('etc', ['scrapy.cfg'])]
+      )
