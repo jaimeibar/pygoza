@@ -39,3 +39,4 @@ END:VCALENDAR
 ### TODO
  * Timezone
  * Disable notifications
+ * Debug info
