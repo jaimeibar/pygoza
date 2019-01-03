@@ -53,6 +53,5 @@ class MatchesSpider(scrapy.Spider):
         self.calendar.add('version', '2.0')
         self.calendar.add('CALSCALE', 'GREGORIAN')
         self.calendar.add('METHOD', 'PUBLISH')
-        cfile = open('zgzcalendar.ics', 'wb')
-        cfile.write(self.calendar.to_ical())
-        cfile.close()
+        with open('zgzcalendar.ics', 'wb') as cfile:
+            cfile.write(self.calendar.to_ical())
