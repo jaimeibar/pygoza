@@ -18,6 +18,7 @@ def _parse_arguments():
     parser.add_argument('-p', '--path', action='store', dest='path',
                         default=os.getcwd(),
                         help='Path where the output file will be stored')
+    parser.add_argument('-d', '--debug', action='store_true', help='Enable debug')
 
     return parser
 
@@ -31,8 +32,11 @@ def main():
     arguments = parser.parse_args()
     fname = arguments.name
     fpath = arguments.path
-    scrapycommand = 'scrapy crawl {0}'.format(getattr(MatchesSpider, 'name')).split()
-    cmdline.execute(scrapycommand)
+    debugmode = arguments.debug
+    scrapycommand = 'scrapy crawl --nolog'
+    if debugmode:
+        scrapycommand = 'scrapy crawl'
+    cmdline.execute((scrapycommand + ' ' + getattr(MatchesSpider, 'name')).split())
 
 
 if __name__ == '__main__':
