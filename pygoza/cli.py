@@ -2,11 +2,15 @@
 
 import argparse
 import os
+import logging
 
 from scrapy import cmdline
 
 from pygoza import __version__
 from pygoza.spiders.matches import MatchesSpider
+
+
+logger = logging.getLogger(__name__)
 
 
 def _parse_arguments():
@@ -33,10 +37,11 @@ def main():
     fname = arguments.name
     fpath = arguments.path
     debugmode = arguments.debug
+    crawlername = getattr(MatchesSpider, 'name')
     scrapycommand = 'scrapy crawl --nolog'
     if debugmode:
         scrapycommand = 'scrapy crawl'
-    cmdline.execute((scrapycommand + ' ' + getattr(MatchesSpider, 'name')).split())
+    cmdline.execute((scrapycommand + ' ' + crawlername).split())
 
 
 if __name__ == '__main__':
