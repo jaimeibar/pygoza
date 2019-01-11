@@ -34,11 +34,11 @@ def main():
     """
     parser = _parse_arguments()
     arguments = parser.parse_args()
-    fname = arguments.name
+    foutput = arguments.output
     fpath = arguments.path
     debugmode = arguments.debug
     crawlername = getattr(MatchesSpider, 'name')
-    setattr(MatchesSpider, 'filename', fname)
+    setattr(MatchesSpider, 'filename', foutput)
     scrapycommand = 'scrapy crawl --nolog'
     if debugmode:
         scrapycommand = 'scrapy crawl'
