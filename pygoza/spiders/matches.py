@@ -30,7 +30,7 @@ class MatchesSpider(scrapy.Spider):
         for match in matches:
             matchloader = ZaragozaMatchItemLoader(ZaragozaMatchItem(), selector=match)
             matchloader.add_css('day', 'span.dia::text')
-            matchloader.add_xpath('time', './/span[@class="fecha"]/span[@class="hora"]/text()')
+            matchloader.add_xpath('time', './/span[starts-with(@class, "fecha")]/span[@class="hora"]/text()')
             localteamloader = matchloader.nested_xpath('.//span[@class="equipo local"]')
             localteamloader.add_xpath('localteam', './/span[@class="team"]/text()')
             # Needed in case localteam is defined inside a <strong> tag
