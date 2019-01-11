@@ -21,6 +21,7 @@ setup(name='pygoza',
           'Natural Language :: English',
           'Operating System :: OS Independent',
           'Programming Language :: Python :: 3.6',
+          'Programming Language :: Python :: 3.7',
           'Topic :: Utilities'
       ],
       keywords='',
