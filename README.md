@@ -40,3 +40,4 @@ END:VCALENDAR
  * Timezone
  * Disable notifications
  * Debug info
+ * Improve cli(path, filename)
