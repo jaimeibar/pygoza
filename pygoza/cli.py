@@ -17,11 +17,11 @@ def _parse_arguments():
     parser = argparse.ArgumentParser(description='Get ics file from match events')
 
     parser.add_argument('-v', '-version', action='version', version=__version__, help='Display the version')
-    parser.add_argument('-n', '--name', action='store', dest='name',
-                        default='zgzcalendar', help='Output file name')
+    parser.add_argument('-o', '--output', action='store', dest='output',
+                        default='zgzcalendar.ics', help='Output file name. Default zgzcalendar.ics')
     parser.add_argument('-p', '--path', action='store', dest='path',
                         default=os.getcwd(),
-                        help='Path where the output file will be stored')
+                        help='Path where the output file will be stored. Default current path.')
     parser.add_argument('-d', '--debug', action='store_true', help='Enable debug')
 
     return parser
@@ -38,6 +38,7 @@ def main():
     fpath = arguments.path
     debugmode = arguments.debug
     crawlername = getattr(MatchesSpider, 'name')
+    setattr(MatchesSpider, 'filename', fname)
     scrapycommand = 'scrapy crawl --nolog'
     if debugmode:
         scrapycommand = 'scrapy crawl'
