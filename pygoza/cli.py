@@ -4,10 +4,13 @@ import argparse
 import os
 import logging
 
-from scrapy import cmdline
+from scrapy.crawler import CrawlerProcess
+from scrapy.settings import Settings
 
 from pygoza import __version__
 from pygoza.spiders.matches import MatchesSpider
+from pygoza.pipelines import PygozaPipeline
+from pygoza import settings as pygozasettings
 
 
 logger = logging.getLogger(__name__)
@@ -36,13 +39,13 @@ def main():
     arguments = parser.parse_args()
     foutput = arguments.output
     fpath = arguments.path
-    debugmode = arguments.debug
-    crawlername = getattr(MatchesSpider, 'name')
-    setattr(MatchesSpider, 'filename', foutput)
-    scrapycommand = 'scrapy crawl --nolog'
-    if debugmode:
-        scrapycommand = 'scrapy crawl'
-    cmdline.execute((scrapycommand + ' ' + crawlername).split())
+    # debugmode = arguments.debug
+    setattr(PygozaPipeline, 'pygozaoutputfile', foutput)
+    pygoza_crawler_settings = Settings()
+    pygoza_crawler_settings.setmodule(pygozasettings)
+    process = CrawlerProcess(settings=pygoza_crawler_settings)
+    process.crawl(MatchesSpider)
+    process.start()
 
 
 if __name__ == '__main__':
