@@ -24,7 +24,7 @@ def _parse_arguments():
                         default='zgzcalendar.ics', help='Output file name. Default zgzcalendar.ics')
     parser.add_argument('-p', '--path', action='store', dest='path',
                         default=os.getcwd(),
-                        help='Path where the output file will be stored. Default current path.')
+                        help='Path where the output file will be stored. Default current path. {0}'.format(os.getcwd()))
     parser.add_argument('-d', '--debug', action='store_true', help='Enable debug')
 
     return parser
