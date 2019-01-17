@@ -9,6 +9,7 @@ from datetime import datetime, time, timedelta
 import logging
 import os.path
 import uuid
+import os
 
 from scrapy.exceptions import DropItem
 from icalendar import Event
@@ -51,8 +52,11 @@ class PygozaPipeline(object):
         )
 
     def close_spider(self, spider):
-        with open(os.path.join(self.zgzcalendarfpath, self.zgzcalendarfname), 'wb') as cfile:
-            cfile.write(self.zgzcalendar.to_ical())
+        if os.access(self.zgzcalendarfpath, os.W_OK):
+            with open(os.path.join(self.zgzcalendarfpath, self.zgzcalendarfname), 'wb') as cfile:
+                cfile.write(self.zgzcalendar.to_ical())
+        else:
+            logger.error('Folder {0} not writable'.format(self.zgzcalendarfpath))
 
     def process_item(self, item, spider):
         if item.keys():
