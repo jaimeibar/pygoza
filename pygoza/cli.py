@@ -41,6 +41,7 @@ def main():
     fpath = arguments.path
     # debugmode = arguments.debug
     setattr(PygozaPipeline, 'pygozaoutputfile', foutput)
+    setattr(PygozaPipeline, 'pygozaoutputfilepath', fpath)
     pygoza_crawler_settings = Settings()
     pygoza_crawler_settings.setmodule(pygozasettings)
     process = CrawlerProcess(settings=pygoza_crawler_settings)
