@@ -19,6 +19,7 @@ class MatchesSpider(scrapy.Spider):
 
     def __init__(self, *args, **kwargs):
         self._calendar = Calendar()
+        self.add_calendar_headers()
         super(MatchesSpider, self).__init__(*args, **kwargs)
 
     @property
@@ -46,12 +47,9 @@ class MatchesSpider(scrapy.Spider):
             matchloader.add_xpath('finalscore', './/strong/text()')
             matchloader.add_css('tv', 'span.tv::text')
             yield matchloader.load_item()
-        self.write_calendar_to_file()
 
-    def write_calendar_to_file(self):
+    def add_calendar_headers(self):
         self.calendar.add('prodid', '-//My ZGZ calendar//EN//')
         self.calendar.add('version', '2.0')
         self.calendar.add('CALSCALE', 'GREGORIAN')
         self.calendar.add('METHOD', 'PUBLISH')
-        with open(getattr(self, 'filename'), 'wb') as cfile:
-            cfile.write(self.calendar.to_ical())
