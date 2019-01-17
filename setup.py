@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import sys
-import os.path
-
 from setuptools import setup, find_packages
 
 from pygoza import __version__
-from pygoza.settings import BOT_NAME
 
 setup(name='pygoza',
       version=__version__,
@@ -37,6 +33,5 @@ setup(name='pygoza',
           'console_scripts': [
               'pygoza = pygoza.cli:main'
           ]
-      },
-      data_files=[(os.path.join(sys.prefix, 'etc', BOT_NAME), ['scrapy.cfg'])]
+      }
       )
