@@ -7,11 +7,12 @@
 
 from datetime import datetime, time, timedelta
 import logging
-import pytz
+import os.path
 import uuid
 
 from scrapy.exceptions import DropItem
 from icalendar import Event
+import pytz
 
 
 """
@@ -41,6 +42,7 @@ class PygozaPipeline(object):
     def __init__(self, zgzcalendar):
         self.zgzcalendar = zgzcalendar
         self.zgzcalendarfname = getattr(self, 'pygozaoutputfile')
+        self.zgzcalendarfpath = getattr(self, 'pygozaoutputfilepath')
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -49,7 +51,7 @@ class PygozaPipeline(object):
         )
 
     def close_spider(self, spider):
-        with open(self.zgzcalendarfname, 'wb') as cfile:
+        with open(os.path.join(self.zgzcalendarfpath, self.zgzcalendarfname), 'wb') as cfile:
             cfile.write(self.zgzcalendar.to_ical())
 
     def process_item(self, item, spider):
