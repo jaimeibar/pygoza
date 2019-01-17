@@ -40,12 +40,17 @@ class PygozaPipeline(object):
 
     def __init__(self, zgzcalendar):
         self.zgzcalendar = zgzcalendar
+        self.zgzcalendarfname = getattr(self, 'pygozaoutputfile')
 
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
             zgzcalendar=getattr(crawler.spider, 'calendar')
         )
+
+    def close_spider(self, spider):
+        with open(self.zgzcalendarfname, 'wb') as cfile:
+            cfile.write(self.zgzcalendar.to_ical())
 
     def process_item(self, item, spider):
         if item.keys():
