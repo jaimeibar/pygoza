@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import os
 import logging
+import os
+
+from pygoza import __version__
+from pygoza import settings as pygozasettings
+
+from pygoza.pipelines import PygozaPipeline  # noqa: I202
+from pygoza.spiders.matches import MatchesSpider
 
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
-
-from pygoza import __version__
-from pygoza.spiders.matches import MatchesSpider
-from pygoza.pipelines import PygozaPipeline
-from pygoza import settings as pygozasettings
-
-
-logger = logging.getLogger(__name__)
 
 
 def _parse_arguments():
@@ -35,11 +33,14 @@ def main():
     Main function
     :return:
     """
+    logging.getLogger('scrapy').propagate = False
     parser = _parse_arguments()
     arguments = parser.parse_args()
     foutput = arguments.output
     fpath = arguments.path
-    # debugmode = arguments.debug
+    debugmode = arguments.debug
+    if debugmode:
+        logging.getLogger('scrapy').propagate = True
     setattr(PygozaPipeline, 'pygozaoutputfile', foutput)
     setattr(PygozaPipeline, 'pygozaoutputfilepath', fpath)
     pygoza_crawler_settings = Settings()
