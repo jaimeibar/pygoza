@@ -14,6 +14,9 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 
 
+logger = logging.getLogger(__name__)
+
+
 def _parse_arguments():
     parser = argparse.ArgumentParser(description='Get ics file from match events')
 
@@ -28,11 +31,17 @@ def _parse_arguments():
     return parser
 
 
+def configure_logger():
+    logformat = '%(levelname)s: %(message)s'
+    logging.basicConfig(format=logformat)
+
+
 def main():
     """
     Main function
     :return:
     """
+    configure_logger()
     logging.getLogger('scrapy').propagate = False
     parser = _parse_arguments()
     arguments = parser.parse_args()
