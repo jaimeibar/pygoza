@@ -17,7 +17,7 @@ from scrapy.settings import Settings
 def _parse_arguments():
     parser = argparse.ArgumentParser(description='Get ics file from match events')
 
-    parser.add_argument('-v', '--version', action='version', version=__version__, help='Display the version')
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s {0}'.format(__version__), help='Display the version')
     parser.add_argument('-o', '--output', action='store', dest='output',
                         default='zgzcalendar.ics', help='Output file name. Default zgzcalendar.ics')
     parser.add_argument('-p', '--path', action='store', dest='path',
