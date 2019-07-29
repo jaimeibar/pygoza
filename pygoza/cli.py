@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import argparse
+"""Console script for pygoza."""
+
+# import argparse
+from pathlib import Path
+import sys
 import logging
 import os
+
+import click
 
 from pygoza import __version__
 from pygoza import settings as pygozasettings
@@ -36,19 +42,22 @@ def configure_logger():
     logging.basicConfig(format=logformat)
 
 
-def main():
-    """
-    Main function
-    :return:
-    """
+@click.command()
+@click.version_option(version=__version__)
+@click.option('-o', '--output', 'foutput', type=click.File, help='File name of the ics file')
+@click.option('-p', '--path', 'fpath', type=click.Path, default=Path.cwd())
+@click.option('-d', '--debug', type=click.BOOL, default=False, is_flag=True,
+              help='Enable debug mode.')
+def main(foutput, fpath, debug):
+    """Console script for pygoza."""
     configure_logger()
     logging.getLogger('scrapy').propagate = False
-    parser = _parse_arguments()
-    arguments = parser.parse_args()
-    foutput = arguments.output
-    fpath = arguments.path
-    debugmode = arguments.debug
-    if debugmode:
+    # parser = _parse_arguments()
+    # arguments = parser.parse_args()
+    # foutput = arguments.output
+    # fpath = arguments.path
+    # debugmode = arguments.debug
+    if debug:
         logging.getLogger('scrapy').propagate = True
     setattr(PygozaPipeline, 'pygozaoutputfile', foutput)
     setattr(PygozaPipeline, 'pygozaoutputfilepath', fpath)
@@ -57,7 +66,8 @@ def main():
     process = CrawlerProcess(settings=pygoza_crawler_settings)
     process.crawl(MatchesSpider)
     process.start()
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
