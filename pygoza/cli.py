@@ -26,7 +26,7 @@ logger = logging.getLogger()
 
 @click.command()
 @click.version_option(version=__version__)
-@click.option('-o', '--output', 'foutput', type=click.File('w'),
+@click.option('-o', '--output', 'foutput', type=click.File('wb'),
               default='pygoza.ics', show_default=True,
               help='File name of the ics file')
 @click.option('-p', '--path', 'fpath', type=click.Path(), default=Path.cwd(),
