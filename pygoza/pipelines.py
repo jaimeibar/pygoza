@@ -52,9 +52,11 @@ class PygozaPipeline(object):
         )
 
     def close_spider(self, spider):
+        # TODO Rewrite with try - except instead and pathlib.Path library.
         if os.access(self.zgzcalendarfpath, os.W_OK):
-            with open(os.path.join(self.zgzcalendarfpath, self.zgzcalendarfname), 'wb') as cfile:
-                cfile.write(self.zgzcalendar.to_ical())
+            # with open(os.path.join(self.zgzcalendarfpath, self.zgzcalendarfname), 'wb') as cfile:
+            # cfile.write(self.zgzcalendar.to_ical())
+            self.zgzcalendarfname.write(self.zgzcalendar.to_ical())
         else:
             logger.error('Folder {0} not writable'.format(self.zgzcalendarfpath))
 
