@@ -2,14 +2,14 @@
 
 """Console script for pygoza."""
 
-# import argparse
+import logging
+import logging.config
 from pathlib import Path
 import sys
-import logging
-import os
 
 import click
 
+from pygoza.logconfig import logging_config
 from pygoza import __version__
 from pygoza import settings as pygozasettings
 
@@ -20,43 +20,22 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 
 
-logger = logging.getLogger(__name__)
-
-
-def _parse_arguments():
-    parser = argparse.ArgumentParser(description='Get ics file from match events')
-
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s {0}'.format(__version__), help='Display the version')
-    parser.add_argument('-o', '--output', action='store', dest='output',
-                        default='zgzcalendar.ics', help='Output file name. Default zgzcalendar.ics')
-    parser.add_argument('-p', '--path', action='store', dest='path',
-                        default=os.getcwd(),
-                        help='Path where the output file will be stored. Default current path. {0}'.format(os.getcwd()))
-    parser.add_argument('-d', '--debug', action='store_true', help='Enable debug')
-
-    return parser
-
-
-def configure_logger():
-    logformat = '%(levelname)s: %(message)s'
-    logging.basicConfig(format=logformat)
+logging.config.dictConfig(logging_config)
+logger = logging.getLogger()
 
 
 @click.command()
 @click.version_option(version=__version__)
-@click.option('-o', '--output', 'foutput', type=click.File, help='File name of the ics file')
-@click.option('-p', '--path', 'fpath', type=click.Path, default=Path.cwd())
+@click.option('-o', '--output', 'foutput', type=click.File('w'),
+              default='pygoza.ics', show_default=True,
+              help='File name of the ics file')
+@click.option('-p', '--path', 'fpath', type=click.Path(), default=Path.cwd(),
+              show_default=True, required=False,
+              help='Path where the ics file will be saved. Default current path.')
 @click.option('-d', '--debug', type=click.BOOL, default=False, is_flag=True,
               help='Enable debug mode.')
 def main(foutput, fpath, debug):
     """Console script for pygoza."""
-    configure_logger()
-    logging.getLogger('scrapy').propagate = False
-    # parser = _parse_arguments()
-    # arguments = parser.parse_args()
-    # foutput = arguments.output
-    # fpath = arguments.path
-    # debugmode = arguments.debug
     if debug:
         logging.getLogger('scrapy').propagate = True
     setattr(PygozaPipeline, 'pygozaoutputfile', foutput)
