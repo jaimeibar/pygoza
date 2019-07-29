@@ -19,7 +19,7 @@ PyGoza
 Get a list of Real Zaragoza matches and saves it into a ics calendar file.
 
 
-* Free software: GNU General Public License v3
+* Free software: GNU General Public License v2
 * Documentation: https://pygoza.readthedocs.io.
 
 
