@@ -1,3 +1,4 @@
+icalendar==4.0.3
 Scrapy==1.5.1
 pytz==2018.7
-icalendar==4.0.3
+Click==7.0
