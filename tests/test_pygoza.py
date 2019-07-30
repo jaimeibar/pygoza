@@ -7,8 +7,8 @@ import pytest
 
 from click.testing import CliRunner
 
-from pygoza import pygoza
 from pygoza import cli
+from pygoza import __version__
 
 
 @pytest.fixture
@@ -32,7 +32,9 @@ def test_command_line_interface():
     runner = CliRunner()
     result = runner.invoke(cli.main)
     assert result.exit_code == 0
-    assert 'pygoza.cli.main' in result.output
     help_result = runner.invoke(cli.main, ['--help'])
     assert help_result.exit_code == 0
-    assert '--help  Show this message and exit.' in help_result.output
+    assert 'Show this message and exit.' in help_result.output
+    version_result = runner.invoke(cli.main, ['--version'])
+    assert result.exit_code == 0
+    assert 'version {}'.format(__version__) in version_result.output
