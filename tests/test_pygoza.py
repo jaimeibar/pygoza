@@ -3,28 +3,14 @@
 
 """Tests for `pygoza` package."""
 
+from pathlib import Path
+
 import pytest
 
 from click.testing import CliRunner
 
 from pygoza import cli
 from pygoza import __version__
-
-
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
-
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
-
-
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
 
 
 def test_command_line_interface():
@@ -38,3 +24,6 @@ def test_command_line_interface():
     version_result = runner.invoke(cli.main, ['--version'])
     assert result.exit_code == 0
     assert 'version {}'.format(__version__) in version_result.output
+    path_result = runner.invoke(cli.main, ['--path /tmp'])
+    # assert path_result.
+    assert Path('/tmp').exists() is True
