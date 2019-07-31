@@ -21,7 +21,7 @@ from scrapy.settings import Settings
 
 
 logging.config.dictConfig(logging_config)
-logger = logging.getLogger()
+logger = logging.getLogger('scrapy')
 
 
 @click.command()
@@ -29,7 +29,7 @@ logger = logging.getLogger()
 @click.option('-o', '--output', 'foutput', type=click.File('wb'),
               default='pygoza.ics', show_default=True,
               help='File name of the ics file')
-@click.option('-p', '--path', 'fpath', type=click.Path(), default=Path.cwd(),
+@click.option('-p', '--path', 'fpath', type=click.Path(exists=True, writable=True), default=Path.cwd(),
               show_default=True, required=False,
               help='Path where the ics file will be saved. Default current path.')
 @click.option('-d', '--debug', type=click.BOOL, default=False, is_flag=True,
@@ -37,7 +37,9 @@ logger = logging.getLogger()
 def main(foutput, fpath, debug):
     """Console script for pygoza."""
     if debug:
-        logging.getLogger('scrapy').propagate = True
+        logger.setLevel(logging.DEBUG)
+        logger.debug('Output file name: {}'.format(foutput))
+        logger.debug('Path: {}'.format(fpath))
     setattr(PygozaPipeline, 'pygozaoutputfile', foutput)
     setattr(PygozaPipeline, 'pygozaoutputfilepath', fpath)
     pygoza_crawler_settings = Settings()
