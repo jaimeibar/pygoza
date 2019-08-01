@@ -36,6 +36,7 @@ logger = logging.getLogger('scrapy')
               help='Enable debug mode.')
 def main(foutput, fpath, debug):
     """Console script for pygoza."""
+    fpath = Path(fpath) if not isinstance(fpath, Path) else fpath
     if debug:
         logger.setLevel(logging.DEBUG)
         logger.debug('Output file name: {}'.format(foutput))
