@@ -26,7 +26,7 @@ logger = logging.getLogger('scrapy')
 
 @click.command()
 @click.version_option(version=__version__)
-@click.option('-o', '--output', 'foutput', type=click.File('wb'),
+@click.option('-o', '--output', 'foutput', type=click.STRING,
               default='pygoza.ics', show_default=True,
               help='File name of the ics file')
 @click.option('-p', '--path', 'fpath', type=click.Path(exists=True, writable=True),
@@ -39,9 +39,9 @@ def main(foutput, fpath, debug):
     fpath = Path(fpath) if not isinstance(fpath, Path) else fpath
     if debug:
         logger.setLevel(logging.DEBUG)
-        logger.debug('Output file name: {}'.format(foutput.name))
+        logger.debug('Output file name: {}'.format(foutput))
         logger.debug('Path: {}'.format(fpath.as_posix()))
-        logger.debug('Full path and filename: {}'.format(fpath.joinpath(foutput.name)))
+        logger.debug('Full path and filename: {}'.format(fpath.joinpath(foutput)))
     setattr(PygozaPipeline, 'pygozaoutputfile', foutput)
     setattr(PygozaPipeline, 'pygozaoutputfilepath', fpath)
     pygoza_crawler_settings = Settings()
