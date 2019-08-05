@@ -6,10 +6,6 @@ logging_config = {
         'debug': {'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s'}
     },
     'handlers': {
-        'console': {'class': 'logging.StreamHandler',
-                    'formatter': 'simple',
-                    'level': 'INFO'
-                    },
         'file': {'class': 'logging.FileHandler',
                  'filename': 'pygoza.log',
                  'formatter': 'debug',
@@ -18,7 +14,7 @@ logging_config = {
     },
     'loggers': {
         '': {
-            'handlers': ['console', 'file'],
+            'handlers': ['file'],
             'level': 'INFO',
             'propagate': True
         }
