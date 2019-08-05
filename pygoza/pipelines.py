@@ -30,7 +30,7 @@ END:VCALENDAR
 """
 
 
-logger = logging.getLogger('scrapy')
+logger = logging.getLogger('pygoza')
 
 
 # Match time duration.
