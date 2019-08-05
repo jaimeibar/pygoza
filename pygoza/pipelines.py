@@ -51,12 +51,11 @@ class PygozaPipeline(object):
         )
 
     def close_spider(self, spider):
-        logger.info('Logging level 3: {}'.format(logger.getEffectiveLevel()))
         finalpath = self.zgzcalendarfpath.joinpath(self.zgzcalendarfname)
         try:
             finalpath.write_bytes(bytearray(self.zgzcalendar.to_ical()))
         except PermissionError as error:
-            logger.error('Permission denied')
+            logger.error('{}'.format(error.strerror))
 
     def process_item(self, item, spider):
         if item.keys():
