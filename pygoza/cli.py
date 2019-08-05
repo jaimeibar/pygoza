@@ -37,11 +37,16 @@ logger = logging.getLogger('scrapy')
 def main(foutput, fpath, debug):
     """Console script for pygoza."""
     fpath = Path(fpath) if not isinstance(fpath, Path) else fpath
+    logger.info('Logging level 3: {}'.format(logger.getEffectiveLevel()))
+    if Path(foutput).is_dir():
+        logger.error('Not a file: {}'.format(foutput))
+        sys.exit(1)
     if debug:
         logger.setLevel(logging.DEBUG)
         logger.debug('Output file name: {}'.format(foutput))
         logger.debug('Path: {}'.format(fpath.as_posix()))
         logger.debug('Full path and filename: {}'.format(fpath.joinpath(foutput)))
+    logger.info('Logging level 2: {}'.format(logger.getEffectiveLevel()))
     setattr(PygozaPipeline, 'pygozaoutputfile', foutput)
     setattr(PygozaPipeline, 'pygozaoutputfilepath', fpath)
     pygoza_crawler_settings = Settings()
