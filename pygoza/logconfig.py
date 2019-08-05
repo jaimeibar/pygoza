@@ -6,8 +6,10 @@ logging_config = {
         'debug': {'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s'}
     },
     'handlers': {
-        'file': {'class': 'logging.FileHandler',
+        'file': {'class': 'logging.handlers.RotatingFileHandler',
                  'filename': 'pygoza.log',
+                 'maxBytes': 5000000,
+                 'backupCount': 5,
                  'formatter': 'debug',
                  'level': 'DEBUG'
                  }
