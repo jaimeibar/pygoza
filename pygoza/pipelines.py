@@ -30,7 +30,7 @@ END:VCALENDAR
 """
 
 
-logger = logging.getLogger()
+logger = logging.getLogger('scrapy')
 
 # Match time duration.
 MATCHTIME = timedelta(hours=2)
