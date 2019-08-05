@@ -32,6 +32,7 @@ END:VCALENDAR
 
 logger = logging.getLogger('scrapy')
 
+
 # Match time duration.
 MATCHTIME = timedelta(hours=2)
 
@@ -50,8 +51,12 @@ class PygozaPipeline(object):
         )
 
     def close_spider(self, spider):
+        logger.info('Logging level 3: {}'.format(logger.getEffectiveLevel()))
         finalpath = self.zgzcalendarfpath.joinpath(self.zgzcalendarfname)
-        finalpath.write_bytes(bytearray(self.zgzcalendar.to_ical()))
+        try:
+            finalpath.write_bytes(bytearray(self.zgzcalendar.to_ical()))
+        except PermissionError as error:
+            logger.error('Permission denied')
 
     def process_item(self, item, spider):
         if item.keys():
