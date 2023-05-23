@@ -1,4 +1,4 @@
 icalendar==4.0.3
-Scrapy==1.5.1
+Scrapy==2.9.0
 pytz==2018.7
 Click==7.0
